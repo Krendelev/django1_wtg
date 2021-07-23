@@ -13,7 +13,7 @@ class PhotoInline(SortableInlineAdminMixin, admin.TabularInline):
 
     def thumbnail(self, obj):
         return (
-            format_html("<img src='{}' height='200' />", obj.photo.url)
+            format_html('<img src="{}" height="200" />', obj.photo.url)
             if obj.photo
             else "Фото ещё не загружено"
         )
