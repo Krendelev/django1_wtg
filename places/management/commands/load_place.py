@@ -15,20 +15,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         response = requests.get(options["url"], timeout=5)
         response.raise_for_status()
-        place_info = response.json()
+        raw_place = response.json()
 
         place, created = Place.objects.get_or_create(
-            title=place_info["title"],
+            title=raw_place["title"],
             defaults={
-                "short_description": place_info["description_short"],
-                "long_description": place_info["description_long"],
-                "longitude": place_info["coordinates"]["lng"],
-                "latitude": place_info["coordinates"]["lat"],
+                "short_description": raw_place["description_short"],
+                "long_description": raw_place["description_long"],
+                "longitude": raw_place["coordinates"]["lng"],
+                "latitude": raw_place["coordinates"]["lat"],
             },
         )
 
         missed_images = []
-        for index, url in enumerate(place_info["imgs"], start=1):
+        for index, url in enumerate(raw_place["imgs"], start=1):
             image, created = Photo.objects.get_or_create(place=place, position=index)
             image_name = Path(url).name
             try:
@@ -45,5 +45,5 @@ class Command(BaseCommand):
             )
 
         self.stdout.write(
-            self.style.SUCCESS(f"Объект {place_info['title']} успешно добавлен в базу")
+            self.style.SUCCESS(f"Объект {raw_place['title']} успешно добавлен в базу")
         )

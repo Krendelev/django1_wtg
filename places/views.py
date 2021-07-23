@@ -5,8 +5,8 @@ from django.urls import reverse
 from .models import Place
 
 
-def get_places_data(places):
-    places_data = {
+def serialize_places(places):
+    serialized_places = {
         "places": {
             "type": "FeatureCollection",
             "features": [
@@ -26,12 +26,12 @@ def get_places_data(places):
             ],
         }
     }
-    return places_data
+    return serialized_places
 
 
 def get_places(request):
     places = Place.objects.all()
-    context = get_places_data(places)
+    context = serialize_places(places)
     return render(request, "index.html", context=context)
 
 
