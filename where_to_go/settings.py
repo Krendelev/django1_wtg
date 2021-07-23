@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party
     "adminsortable2",
+    "tinymce",
     # local
     "places.apps.PlacesConfig",
 ]
