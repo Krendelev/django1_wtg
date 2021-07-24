@@ -17,6 +17,10 @@ class Place(models.Model):
         return self.title
 
 
+def photo_directory_path(instance, filename):
+    return f"{instance.place.id}/{filename}"
+
+
 class Photo(models.Model):
     place = models.ForeignKey(
         Place,
@@ -25,11 +29,7 @@ class Photo(models.Model):
         verbose_name="Место",
     )
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Позиция")
-
-    def upload_to(self, filename):
-        return f"{self.place.id}/{filename}"
-
-    photo = models.ImageField(upload_to=upload_to, verbose_name="Фото")
+    photo = models.ImageField(upload_to=photo_directory_path, verbose_name="Фото")
 
     class Meta:
         verbose_name = "Фото"

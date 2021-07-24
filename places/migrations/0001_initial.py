@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('position', models.PositiveSmallIntegerField(default=0, verbose_name='Позиция')),
-                ('photo', models.ImageField(upload_to=places.models.Photo.upload_to, verbose_name='Фото')),
+                ('photo', models.ImageField(upload_to=places.models.photo_directory_path, verbose_name='Фото')),
                 ('place', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='photos', to='places.place', verbose_name='Место')),
             ],
             options={
